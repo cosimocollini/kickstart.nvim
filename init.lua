@@ -672,7 +672,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -682,8 +682,57 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
-        --
-
+        tsserver = {
+        enabled = false,
+        },
+        ts_ls = {
+          enabled = false,
+        },
+        volar = {
+          init_options = {
+            vue = {
+              hybridMode = true,
+            },
+          },
+        },
+        vtsls = {},
+        html_ls = {
+          init_options = {
+            configurationSection = { "html", "css", "javascript" },
+            embeddedLanguages = {
+              css = true,
+              javascript = true,
+            },
+            provideFormatter = true,
+          },
+        },
+        css_ls = {
+          init_options = {
+            provideFormatter = true,
+          },
+        },
+        scss_ls = {
+          init_options = {
+            provideFormatter = true,
+          },
+        },
+        tailwindcss = {},
+        json_ls = {
+          init_options = {
+            provideFormatter = true,
+          },
+        },
+        dockerfile_ls = {
+          init_options = {
+            format = { enable = true },
+          },
+        },
+        bash_ls = {
+          init_options = {
+            shellcheck = { enable = true },
+            shfmt = { enable = true },
+          },
+        },
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
@@ -716,6 +765,22 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        "shfmt",
+        "prettier",
+        "prettierd",
+        "eslint_d",
+        "typescript-language-server",
+        "vue-language-server",
+        "json-lsp",
+        "yaml-language-server",
+        "dockerfile-language-server",
+        "bash-language-server",
+        "lua-language-server",
+        "html-lsp",
+        "css-lsp",
+        "scss-lsp",
+        "volar",
+        "gopls",
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -769,10 +834,30 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        python = { "isort", "black" },
+        javascript = { "prettierd", stop_after_first = true },
+        typescript = { "prettierd", stop_after_first = true },
+        javascriptreact = { "prettierd", stop_after_first = true },
+        typescriptreact = { "prettierd", stop_after_first = true },
+        css = { "prettier" },
+        html = { "prettier" },
+        json = { "prettier" },
+        yaml = { "prettier" },
+        markdown = { "prettier" },
+        graphql = { "prettier" },
+        vue = { "prettierd", stop_after_first = true },
+        go = { "gofmt" },
+        sh = { "shfmt" },
+        bash = { "shfmt" },
+      },
+      formatters = {
+        prettier = {
+          prepend_args = { "--single-quote", "--jsx-single-quote" },
+        },
+        shfmt = {
+          prepend_args = { "-i", "2", "-ci" },
+        },
       },
     },
   },
@@ -844,6 +929,7 @@ require('lazy').setup({
       appearance = {
         -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
         -- Adjusts spacing to ensure icons are aligned
+        -- use_nvim_cmp_as_default = true,
         nerd_font_variant = 'mono',
       },
 
@@ -881,20 +967,20 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+    'catppuccin/nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
+      --require('tokyonight').setup {
+      --  styles = {
+      --    comments = { italic = false }, -- Disable italics in comments
+      --  },
+      --}
 
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -919,6 +1005,12 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
+      require('mini.files').setup {
+        options = {
+          use_as_default_explorer = false,
+        },
+      }
+        
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
@@ -944,7 +1036,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'css', 'scss', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'javascript', 'typescript', 'vue', 'json', 'go', 'gomod', 'gowork', 'gosum', },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
