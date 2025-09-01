@@ -18,7 +18,7 @@ return {
   require 'custom.plugins.harpoon',
   -- require 'custom.plugins.arrow',
   -- require 'custom.plugins.markdown',
-  require 'custom.plugins.diff-view',
+  -- require 'custom.plugins.diff-view',
   -- require 'custom.plugins.marko',
-  require 'custom.plugins.minifiles',
+  -- require 'custom.plugins.colorizer',
 }

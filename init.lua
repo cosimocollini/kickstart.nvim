@@ -102,7 +102,7 @@ vim.g.have_nerd_font = true
 vim.o.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.o.relativenumber = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = 'a'
@@ -170,10 +170,10 @@ vim.o.confirm = true
 --  See `:help vim.keymap.set()`
 
 -- Save files with <C-s> in all mode
-vim.keymap.set({ "i", "x", "n", "s" }, '<C-s>', '<cmd>update<CR>', { desc = 'Save File' })
+vim.keymap.set({ 'i', 'x', 'n', 's' }, '<C-s>', '<cmd>update<CR>', { desc = 'Save File' })
 
 -- quit
-vim.keymap.set("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
+vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -200,10 +200,10 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -226,10 +226,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- Automatically save files when leaving them
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost" }, {
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost' }, {
   callback = function()
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand("%") ~= "" and vim.bo.buftype == "" then
-      vim.api.nvim_command('silent update')
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
+      vim.api.nvim_command 'silent update'
     end
   end,
 })
@@ -853,7 +853,7 @@ require('lazy').setup({
         yaml = { 'prettier' },
         markdown = { 'prettier' },
         graphql = { 'prettier' },
-        vue = { 'prettierd', stop_after_first = true },
+        vue = { 'prettier', stop_after_first = true },
         go = { 'gofmt' },
         sh = { 'shfmt' },
         bash = { 'shfmt' },
@@ -1012,13 +1012,14 @@ require('lazy').setup({
       -- - sr)'  - [S]urround [R]eplace [)] [']
       require('mini.surround').setup()
 
+      require('mini.move').setup()
 
       -- Normal and Visual modes
       --'gc' Toggle comment (like `gcip` - comment inner paragraph) for both
-    --'gcc' Toggle comment on current line
-    --'gc' Toggle comment on visual selection
-    --'gc' Define 'comment' textobject (like `dgc` - delete whole comment block)
-    -- Works also in Visual mode if mapping differs from `comment_visual`
+      --'gcc' Toggle comment on current line
+      --'gc' Toggle comment on visual selection
+      --'gc' Define 'comment' textobject (like `dgc` - delete whole comment block)
+      -- Works also in Visual mode if mapping differs from `comment_visual`
       require('mini.comment').setup()
 
       -- Simple and easy statusline.
