@@ -8,7 +8,7 @@ return {
 
     harpoon:setup()
 
-    vim.keymap.set('n', '<leader>a', function()
+    vim.keymap.set('n', '<leader>aa', function()
       harpoon:list():add()
     end, { desc = 'Harpoon Add file to list' })
     vim.keymap.set('n', '<C-E>', function()
@@ -28,16 +28,16 @@ return {
       harpoon:list():select(4)
     end, { desc = 'Harpoon select 4' })
 
-    vim.keymap.set('n', '<leader><C-h>', function()
+    vim.keymap.set('n', '<leader>ah', function()
       harpoon:list():replace_at(1)
     end, { desc = 'Harpoon replace 1' })
-    vim.keymap.set('n', '<leader><C-j>', function()
+    vim.keymap.set('n', '<leader>aj', function()
       harpoon:list():replace_at(2)
     end, { desc = 'Harpoon replace 2' })
-    vim.keymap.set('n', '<leader><C-k>', function()
+    vim.keymap.set('n', '<leader>ak', function()
       harpoon:list():replace_at(4)
     end, { desc = 'Harpoon replace 4' })
-    vim.keymap.set('n', '<leader><C-l>', function()
+    vim.keymap.set('n', '<leader>al', function()
       harpoon:list():replace_at(4)
     end, { desc = 'Harpoon replace 4' })
   end,

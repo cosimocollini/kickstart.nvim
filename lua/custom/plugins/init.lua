@@ -20,5 +20,5 @@ return {
   -- require 'custom.plugins.markdown',
   -- require 'custom.plugins.diff-view',
   -- require 'custom.plugins.marko',
-  -- require 'custom.plugins.colorizer',
+  require 'custom.plugins.highlight-colors',
 }
